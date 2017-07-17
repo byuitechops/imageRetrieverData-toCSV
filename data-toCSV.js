@@ -1,6 +1,7 @@
 /*eslint env node*/
 var records = require('./scripts.js');
 var dsv = require('d3-dsv');
+var fs = require('fs');
 
 function pullData(records) {
     return records.reduce(function (newData, record) {
@@ -15,4 +16,5 @@ function pullData(records) {
     }, [])
 }
 
-console.log(pullData(records));
+var newCSV = dsv.csvFormat(pullData(records), ["title", "number", "url"]);
+fs.writeFileSync("Image-Retriever-Records.csv", newCSV, 'utf8');
